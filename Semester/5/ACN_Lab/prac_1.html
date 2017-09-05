@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B. Voc (Software Develpment) Archive</title>
+    <link rel="stylesheet" href="../../../css/style.css">
+    
+</head>
+<body>
+    
+    <div id="container">
+        
+        <header>
+            
+            <h1>B. Voc Archive</h1>
+                    
+        </header>
+        
+        <div class="content">
+            
+            <h2>Write a program to demonstrate the communication between one client and one server.</h2>
+            
+            <h3>MyServer.java</h3>
+            <pre>
+                <code>
+import java.io.*;
+import java.net.*;
+
+public class MyServer{
+
+  ServerSocket ss;
+  Socket s;
+  DataInputStream dis;
+  DataOutputStream dos;
+
+  public MyServer(){
+
+    try
+    {
+      System.out.println("Server Started");
+      ss=new ServerSocket(10);
+      s=ss.accept();
+      System.out.println(s);
+      System.out.println("Cliect Connected");
+      dis=new DataInputStream(s.getInputStream());
+      dos=new DataOutputStream(s.getOutputStream());
+      ServerChat();
+    }
+    catch(Exception e)
+    {
+      System.out.println(e);
+    }
+  }
+
+  public static void main(String[] str){
+    new MyServer();
+  }
+
+  public void ServerChat() throws IOException{
+
+    String str, s1;
+    do{
+
+      str = dis.readUTF();
+      System.out.println("Client Message: "+str);
+      BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+      s1=br.readLine();
+      dos.writeUTF(s1);
+      dos.flush();
+    }
+    while(!s1.equals("bye"));
+  }
+}
+                </code>
+            </pre>
+            
+            <h3>MyClient.java</h3>
+            <pre>
+                <code>
+
+import java.io.*;
+import java.net.*;
+
+public class MyClient{
+
+  Socket s;
+  DataInputStream dis;
+  DataOutputStream dout;
+
+  public MyClient(){
+
+    try
+    {
+      s=new Socket("localhost",10);
+      System.out.println(s);
+      dis=new DataInputStream(s.getInputStream());
+      dout=new DataOutputStream(s.getOutputStream());
+      ClientChat();
+    }
+    catch(Exception e)
+    {
+      System.out.println(e);
+    }
+  }
+
+  public static void main(String[] str){
+    new MyClient();
+  }
+
+  public void ClientChat() throws IOException{
+
+    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+    String s1;
+ 
+    do{
+
+      s1=br.readLine();
+      dout.writeUTF(s1);
+      dout.flush();
+      System.out.println("Server Message: "+dis.readUTF());
+
+    }
+    while(!s1.equals("stop"));
+  }
+}
+                </code>
+            </pre>
+            
+            <button class="btn_download"><a href="Practical_1.zip" download>Download Source Code</a></button>
+            
+        </div>
+        
+        <footer>
+            
+            <p>&copy;Manoj Rathi:2017</p>
+            
+        </footer>
+        
+    </div>
+    
+    
+    
+</body>
+</html>
