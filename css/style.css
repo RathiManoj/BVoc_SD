@@ -52,8 +52,13 @@ footer p {
     padding: 15px;
 }
 
+#container {
+    height: 100%;
+}
+
 div.content {
     width: 1024px;
+    min-height: 450px;
     margin: 0 auto;
 }
 
